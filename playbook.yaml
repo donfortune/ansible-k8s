@@ -1,0 +1,19 @@
+
+
+
+
+- name: Deploy app in new namespace
+  hosts: localhost     #executing ansible playbook locally, but connecting to a k8s cluster
+  tasks:
+    - name: Create a k8s namespace
+      community.kubernetes.k8s:
+        name: my-app
+        api_version: v1
+        kind: Namespace
+        state: present
+    - name: Deploy nginx app 
+      community.kubernetes.k8s:
+        src: "source to nginx config file"
+        state: present
+        namespace: my-app
+
